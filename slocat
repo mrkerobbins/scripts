@@ -1,0 +1,47 @@
+#!/usr/bin/env ruby
+#
+# Program to type slowly.
+
+def sloprint array
+    word = array.split("")
+    word.each do |letter|
+      print letter
+      sleep (1.0/10.0)
+    end
+    print " "
+    sleep (1.0/10.0)
+end
+
+if ARGV[0] == "-h"
+  puts "Slocat is a program that works a lot like cat. All it does is slowly print out either the text from stdin or anything from a file in a slow, controlled manner (10 letters/sec)."
+  exit (0)
+elsif ARGV[0] == "-w"
+  ARGV.delete_at(0)
+  ARGV.each do |word|
+    sloprint word
+  end
+  puts
+  exit(0)
+elsif ARGV[0] == "-f"
+  ARGV.delete_at(0)
+  ARGV.each do |word|
+    if File.exists?(word)
+      myfile = File.open(word, "r").read
+      sloprint myfile
+    else
+      print "File #{word} does not exist."
+    end
+    puts
+  end
+  exit (0)
+else
+  ARGV.each do |word|
+    if File.exists?(word)
+      myfile = File.open(word, "r").read
+      sloprint myfile
+    else
+      sloprint word
+    end
+    puts
+  end
+end
