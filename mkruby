@@ -9,6 +9,11 @@ end
 
 for i in 0..ARGV.length-1
   filename = ARGV[i].to_s
-  `echo '#!/usr/bin/env ruby' > #{filename}`
-  `chmod 744 ./#{filename}`
+  if filename =~ /.*(.rb)/
+    `echo '#!/usr/bin/env ruby' > #{filename}`
+    `chmod 744 ./#{filename}`
+  else
+    `echo '#!/usr/bin/env ruby' > #{filename}.rb`
+    `chmod 744 ./#{filename}.rb`
+  end
 end
